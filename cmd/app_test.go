@@ -7,5 +7,14 @@ import (
 )
 
 func TestNewApp(t *testing.T) {
-	assert.Equal(t, NewApp(), new(App), "NewApp return something different than initiated App struct")
+	app := &App{[]string{}}
+	assert.Equal(t, NewApp([]string{}), app, "NewApp return something different than initiated App struct")
+}
+
+func TestRun(t *testing.T) {
+	// When calling duplicate
+	args := []string{"test", "duplicate"}
+	app := NewApp(args)
+
+	app.Run()
 }
