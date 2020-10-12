@@ -34,6 +34,10 @@ func (a *App) Log(msg string) {
 
 // LogError to report error
 func (a *App) LogError(msg string, exitCode int) {
+	if exitCode < 1 {
+		panic("For logging successful status use Log")
+	}
+
 	a.msg = msg
 	a.exitCode = exitCode
 }
