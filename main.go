@@ -7,5 +7,7 @@ import (
 
 func main() {
 	app := cmd.NewApp(os.Args)
-	app.Run()
+	msg, exitCode := app.Run()
+	os.Stdout.WriteString(msg)
+	os.Exit(exitCode)
 }
