@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"os/exec"
 	"reflect"
 	"strings"
 )
@@ -16,7 +15,6 @@ type App struct {
 var (
 	// AvailableCmds for storing the available commands that can be used
 	AvailableCmds = []string{"duplicate"}
-	ee            *exec.ExitError
 )
 
 // NewApp is for
@@ -36,6 +34,10 @@ func (a *App) Log(msg string) {
 
 // LogError to report error
 func (a *App) LogError(msg string, exitCode int) {
+	if exitCode < 1 {
+		panic("For logging successful status use Log")
+	}
+
 	a.msg = msg
 	a.exitCode = exitCode
 }
@@ -50,7 +52,6 @@ func (a *App) Run() (string, int) {
 
 		f := reflect.ValueOf(cmdMappings[cmdName])
 		f.Call([]reflect.Value{})
-
 	}
 
 	return a.msg, a.exitCode

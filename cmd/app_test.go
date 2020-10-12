@@ -7,7 +7,7 @@ import (
 )
 
 func TestNewApp(t *testing.T) {
-	app := &App{args: []string{}}
+	app := &App{}
 	assert.Equal(t, NewApp([]string{}), app, "NewApp return something different than initiated App struct")
 }
 
