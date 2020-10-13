@@ -7,9 +7,8 @@ import (
 
 // App for the main application
 type App struct {
-	args     []string
-	msg      string
-	exitCode int
+	args []string
+	msg  string
 }
 
 var (
@@ -29,30 +28,20 @@ func NewApp(args []string) *App {
 // Log a string and set exit code as 0
 func (a *App) Log(msg string) {
 	a.msg = msg
-	a.exitCode = 0
-}
-
-// LogError to report error
-func (a *App) LogError(msg string, exitCode int) {
-	if exitCode < 1 {
-		panic("For logging successful status use Log")
-	}
-
-	a.msg = msg
-	a.exitCode = exitCode
 }
 
 // Run the actual app
 func (a *App) Run() (string, int) {
+	exitCode := 0
 	if len(a.args) == 0 {
 		a.Help()
 	} else {
 		cmdName := strings.ToLower(a.args[0])
-		cmdMappings := map[string]func(){"duplicate": a.Duplicate}
+		cmdMappings := map[string]func() int{"duplicate": a.Duplicate}
 
 		f := reflect.ValueOf(cmdMappings[cmdName])
-		f.Call([]reflect.Value{})
+		exitCode = f.Call([]reflect.Value{})[0].Interface().(int)
 	}
 
-	return a.msg, a.exitCode
+	return a.msg, exitCode
 }
