@@ -13,7 +13,7 @@ type App struct {
 
 var (
 	// AvailableCmds for storing the available commands that can be used
-	AvailableCmds = []string{"duplicate"}
+	AvailableCmds = []string{"duplicate", "temperature"}
 )
 
 // NewApp is for
@@ -37,7 +37,7 @@ func (a *App) Run() (string, int) {
 		a.Help()
 	} else {
 		cmdName := strings.ToLower(a.args[0])
-		cmdMappings := map[string]func() int{"duplicate": a.Duplicate}
+		cmdMappings := map[string]func() int{"duplicate": a.Duplicate, "temperature": a.Temperature}
 
 		f := reflect.ValueOf(cmdMappings[cmdName])
 		exitCode = f.Call([]reflect.Value{})[0].Interface().(int)
