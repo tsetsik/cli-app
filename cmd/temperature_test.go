@@ -33,4 +33,13 @@ func TestTemperature(t *testing.T) {
 
 	assert.Equal(t, exitCode, 0)
 	assert.Equal(t, app.msg, "The answer is: 0")
+
+	// When there is exact match
+	args = []string{"test", "temperature", "1", "[2, 0, 5, 1]"}
+	app = NewApp(args)
+
+	exitCode = app.Temperature()
+
+	assert.Equal(t, exitCode, 0)
+	assert.Equal(t, app.msg, "The answer is: 1")
 }

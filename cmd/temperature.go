@@ -7,6 +7,21 @@ import (
 	"strconv"
 )
 
+func closestToZero(s []int) int {
+	sort.Ints(s)
+	num := s[0]
+
+	// In the cases where the distance is equal between two ints
+	if len(s) == 2 {
+		numB := s[1]
+		if num < 0 && numB <= 0 {
+			num = numB
+		}
+	}
+
+	return num
+}
+
 // Temperature that returns closes temperature to given one
 func (a *App) Temperature() int {
 	needle, err := strconv.Atoi(a.args[1])
@@ -38,11 +53,7 @@ func (a *App) Temperature() int {
 	sort.Ints(lists)
 	searched := mappings[lists[0]]
 
-	if len(searched) > 1 {
-		sort.Ints(searched)
-	}
-
-	a.Log(fmt.Sprintf("The answer is: %d", searched[0]))
+	a.Log(fmt.Sprintf("The answer is: %d", closestToZero(searched)))
 
 	return 0
 }
